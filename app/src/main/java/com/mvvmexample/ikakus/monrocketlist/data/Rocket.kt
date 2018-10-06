@@ -18,6 +18,7 @@ package com.mvvmexample.ikakus.monrocketlist.data
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 /**
  * Immutable model class for a Rocket. In order to compile with Room, we can't use @JvmOverloads to
@@ -31,6 +32,7 @@ import android.arch.persistence.room.PrimaryKey
  */
 @Entity(tableName = "rockets")
 data class Rocket @JvmOverloads constructor(
+    @SerializedName("rocket_name")
     @ColumnInfo(name = "name") var name: String = "",
     @ColumnInfo(name = "country") var country: String = "",
     @ColumnInfo(name = "engines_count") var enginesCount: Int = 0,

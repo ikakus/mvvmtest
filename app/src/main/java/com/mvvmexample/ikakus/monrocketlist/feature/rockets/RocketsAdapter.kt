@@ -24,14 +24,14 @@ class RocketsAdapter(
 
     override fun getView(position: Int, view: View?, viewGroup: ViewGroup): View {
         val binding: RocketItemBinding
-        if (view == null) {
+        binding = if (view == null) {
             // Inflate
             val inflater = LayoutInflater.from(viewGroup.context)
             // Create the binding
-            binding = RocketItemBinding.inflate(inflater, viewGroup, false)
+            RocketItemBinding.inflate(inflater, viewGroup, false)
         } else {
             // Recycling view
-            binding = DataBindingUtil.getBinding(view)!!
+            DataBindingUtil.getBinding(view)!!
         }
 
         with(binding) {

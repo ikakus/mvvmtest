@@ -5,29 +5,32 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.databinding.BindingAdapter
 import android.databinding.ObservableArrayList
-import android.databinding.ObservableField
+import android.databinding.ObservableBoolean
 import android.databinding.ObservableList
 import android.widget.ListView
-import com.mvvmexample.ikakus.monrocketlist.data.IRocketsRepository
 import com.mvvmexample.ikakus.monrocketlist.data.Rocket
+import com.mvvmexample.ikakus.monrocketlist.data.RocketRepository
+import com.mvvmexample.ikakus.monrocketlist.schedulers.SchedulerProvider
 
 class RocketViewModel(
     context: Application,
-    private val rocketsRepository: IRocketsRepository
+    private val rocketsRepository: RocketRepository
 ) : AndroidViewModel(context) {
 
   val items: ObservableList<Rocket> = ObservableArrayList()
-
-  val numberOfActiveTasksString = ObservableField<String>()
+  val loading = ObservableBoolean(false)
 
   fun start() {
-    numberOfActiveTasksString.set("asfsdf")
     loadRockets()
   }
 
   @SuppressLint("CheckResult")
-  private fun loadRockets() {
+  internal fun loadRockets() {
     rocketsRepository.getRockets()
+        .toObservable()
+        .observeOn(SchedulerProvider().ui())
+        .doOnSubscribe { loading.set(true) }
+        .doFinally { loading.set(false) }
         .subscribe{ rockets ->
           with(items) {
             clear()
