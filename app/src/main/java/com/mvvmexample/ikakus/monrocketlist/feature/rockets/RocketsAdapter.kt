@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import com.mvvmexample.ikakus.monrocketlist.data.Rocket
+import com.mvvmexample.ikakus.monrocketlist.data.RocketData
 import com.mvvmexample.ikakus.monrocketlist.databinding.RocketItemBinding
 
 
 class RocketsAdapter(
-    private var rockets: List<Rocket>,
+    private var rockets: List<RocketData>,
     private var viewModel: RocketViewModel) : BaseAdapter() {
 
-  fun replaceData(list: List<Rocket>) {
+  fun replaceData(list: List<RocketData>) {
     setList(list)
   }
 
@@ -36,8 +36,8 @@ class RocketsAdapter(
     }
 
     val userActionsListener = object : RocketItemUserActionsListener {
-      override fun onRocketClicked(rocket: Rocket) {
-        viewModel.openRocketEvent.value = rocket.id
+      override fun onRocketClicked(rocket: RocketData) {
+        viewModel.openRocketEvent.value = rocket.rocket_id
       }
 
     }
@@ -51,7 +51,7 @@ class RocketsAdapter(
     return binding.root
   }
 
-  private fun setList(list: List<Rocket>) {
+  private fun setList(list: List<RocketData>) {
     this.rockets = list
     notifyDataSetChanged()
   }

@@ -1,28 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="rocket"
-            type="com.mvvmexample.ikakus.monrocketlist.data.Rocket" />
+            type="com.mvvmexample.ikakus.monrocketlist.data.RocketData"/>
+
         <variable
             name="listener"
-            type="com.mvvmexample.ikakus.monrocketlist.feature.rockets.RocketItemUserActionsListener" />
+            type="com.mvvmexample.ikakus.monrocketlist.feature.rockets.RocketItemUserActionsListener"/>
 
     </data>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="@drawable/item_selector"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:onClick="@{() -> listener.onRocketClicked(rocket)}"
         >
+
         <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
+            android:id="@+id/rocket_name"
+            style="@style/TextItemTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:text="@{rocket.name}" />
-    </LinearLayout>
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@{rocket.rocket_name}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Falcon"/>
+
+        <TextView
+            android:id="@+id/country"
+            style="@style/TextItemSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:text="@{rocket.country}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rocket_name"
+            tools:text="Falcon"/>
+
+        <TextView
+            android:id="@+id/engines_count"
+            style="@style/TextItemSubTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@{String.valueOf(rocket.engines.number)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="8dp"
+            tools:text="Falcon"/>
+
+    </android.support.constraint.ConstraintLayout>
 </layout>

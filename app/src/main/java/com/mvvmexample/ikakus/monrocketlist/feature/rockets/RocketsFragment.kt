@@ -9,7 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mvvmexample.ikakus.monrocketlist.data.Rocket
+import com.mvvmexample.ikakus.monrocketlist.data.RocketData
 import com.mvvmexample.ikakus.monrocketlist.databinding.RocketListFragBinding
 import com.mvvmexample.ikakus.monrocketlist.feature.rocketdetails.RocketDetailsActivity
 import kotlinx.android.synthetic.main.rocket_list_frag.*
@@ -51,7 +51,7 @@ class RocketsFragment : Fragment() {
         viewModel.loadRockets()
       }
 
-      viewModel.openRocketEvent.observe(this, Observer<Int> { rocketId ->
+      viewModel.openRocketEvent.observe(this, Observer { rocketId ->
         if (rocketId != null) {
           openRocketDetails(rocketId)
         }
@@ -63,7 +63,7 @@ class RocketsFragment : Fragment() {
     }
   }
 
-  private fun openRocketDetails(rocketId: Int) {
+  private fun openRocketDetails(rocketId: String) {
     val intent = Intent(context, RocketDetailsActivity::class.java).apply {
       putExtra(RocketDetailsActivity.EXTRA_ROCKET_ID, rocketId)
     }
@@ -71,24 +71,24 @@ class RocketsFragment : Fragment() {
   }
 
   private fun bindListItems(viewModel: RocketViewModel) {
-    viewModel.items.addOnListChangedCallback(object : ObservableList.OnListChangedCallback<ObservableList<Rocket>>() {
-      override fun onChanged(sender: ObservableList<Rocket>?) {
+    viewModel.items.addOnListChangedCallback(object : ObservableList.OnListChangedCallback<ObservableList<RocketData>>() {
+      override fun onChanged(sender: ObservableList<RocketData>?) {
         rocketsAdapter.replaceData(sender?.toList()!!)
       }
 
-      override fun onItemRangeRemoved(sender: ObservableList<Rocket>?, positionStart: Int, itemCount: Int) {
+      override fun onItemRangeRemoved(sender: ObservableList<RocketData>?, positionStart: Int, itemCount: Int) {
         rocketsAdapter.replaceData(sender?.toList()!!)
       }
 
-      override fun onItemRangeMoved(sender: ObservableList<Rocket>?, fromPosition: Int, toPosition: Int, itemCount: Int) {
+      override fun onItemRangeMoved(sender: ObservableList<RocketData>?, fromPosition: Int, toPosition: Int, itemCount: Int) {
         rocketsAdapter.replaceData(sender?.toList()!!)
       }
 
-      override fun onItemRangeInserted(sender: ObservableList<Rocket>?, positionStart: Int, itemCount: Int) {
+      override fun onItemRangeInserted(sender: ObservableList<RocketData>?, positionStart: Int, itemCount: Int) {
         rocketsAdapter.replaceData(sender?.toList()!!)
       }
 
-      override fun onItemRangeChanged(sender: ObservableList<Rocket>?, positionStart: Int, itemCount: Int) {
+      override fun onItemRangeChanged(sender: ObservableList<RocketData>?, positionStart: Int, itemCount: Int) {
         rocketsAdapter.replaceData(sender?.toList()!!)
       }
 

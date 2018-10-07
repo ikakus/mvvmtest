@@ -9,7 +9,7 @@ import android.databinding.ObservableBoolean
 import android.databinding.ObservableList
 import android.widget.ListView
 import com.mvvmexample.ikakus.monrocketlist.SingleLiveEvent
-import com.mvvmexample.ikakus.monrocketlist.data.Rocket
+import com.mvvmexample.ikakus.monrocketlist.data.RocketData
 import com.mvvmexample.ikakus.monrocketlist.data.RocketRepository
 import com.mvvmexample.ikakus.monrocketlist.schedulers.SchedulerProvider
 
@@ -18,9 +18,9 @@ class RocketViewModel(
     private val rocketsRepository: RocketRepository
 ) : AndroidViewModel(context) {
 
-  val items: ObservableList<Rocket> = ObservableArrayList()
+  val items: ObservableList<RocketData> = ObservableArrayList()
   val loading = ObservableBoolean(false)
-  internal val openRocketEvent = SingleLiveEvent<Int>()
+  internal val openRocketEvent = SingleLiveEvent<String>()
 
   fun start() {
     loadRockets()
@@ -42,7 +42,7 @@ class RocketViewModel(
   }
 
   @BindingAdapter("listItems")
-  fun setItems(listView: ListView, items: List<Rocket>) {
+  fun setItems(listView: ListView, items: List<RocketData>) {
     with(listView.adapter as RocketsAdapter) {
       replaceData(items)
     }

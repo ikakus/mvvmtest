@@ -31,7 +31,7 @@ import com.google.gson.annotations.SerializedName
  * @param id         id of the rocket
  */
 @Entity(tableName = "rockets")
-data class Rocket @JvmOverloads constructor(
+data class RocketDto @JvmOverloads constructor(
     @SerializedName("rocket_name")
     @ColumnInfo(name = "name") var name: String = "",
     @ColumnInfo(name = "country") var country: String = "",
