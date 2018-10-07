@@ -8,6 +8,7 @@ import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableList
 import android.widget.ListView
+import com.mvvmexample.ikakus.monrocketlist.SingleLiveEvent
 import com.mvvmexample.ikakus.monrocketlist.data.Rocket
 import com.mvvmexample.ikakus.monrocketlist.data.RocketRepository
 import com.mvvmexample.ikakus.monrocketlist.schedulers.SchedulerProvider
@@ -19,6 +20,7 @@ class RocketViewModel(
 
   val items: ObservableList<Rocket> = ObservableArrayList()
   val loading = ObservableBoolean(false)
+  internal val openRocketEvent = SingleLiveEvent<Int>()
 
   fun start() {
     loadRockets()

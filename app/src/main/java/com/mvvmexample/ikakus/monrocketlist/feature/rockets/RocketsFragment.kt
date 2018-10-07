@@ -1,5 +1,7 @@
 package com.mvvmexample.ikakus.monrocketlist.feature.rockets
 
+import android.arch.lifecycle.Observer
+import android.content.Intent
 import android.databinding.ObservableList
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.mvvmexample.ikakus.monrocketlist.data.Rocket
 import com.mvvmexample.ikakus.monrocketlist.databinding.RocketListFragBinding
+import com.mvvmexample.ikakus.monrocketlist.feature.rocketdetails.RocketDetailsActivity
+import kotlinx.android.synthetic.main.rocket_list_frag.*
 import org.koin.android.architecture.ext.viewModel
 
 class RocketsFragment : Fragment() {
@@ -27,9 +31,10 @@ class RocketsFragment : Fragment() {
     return viewDataBinding.root
   }
 
-  override fun onResume() {
-    super.onResume()
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
     viewDataBinding.viewmodel?.start()
+
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -40,13 +45,29 @@ class RocketsFragment : Fragment() {
   private fun setupListAdapter() {
     val viewModel = viewDataBinding.viewmodel
     if (viewModel != null) {
-      rocketsAdapter = RocketsAdapter(ArrayList(0))
+      rocketsAdapter = RocketsAdapter(ArrayList(0), viewModel)
       viewDataBinding.rocketsList.adapter = rocketsAdapter
+      swipe_to_refresh.setOnRefreshListener {
+        viewModel.loadRockets()
+      }
+
+      viewModel.openRocketEvent.observe(this, Observer<Int> { rocketId ->
+        if (rocketId != null) {
+          openRocketDetails(rocketId)
+        }
+      })
 
       bindListItems(viewModel)
     } else {
       Log.w(TAG, "ViewModel not initialized when attempting to set up adapter.")
     }
+  }
+
+  private fun openRocketDetails(rocketId: Int) {
+    val intent = Intent(context, RocketDetailsActivity::class.java).apply {
+      putExtra(RocketDetailsActivity.EXTRA_ROCKET_ID, rocketId)
+    }
+    startActivity(intent)
   }
 
   private fun bindListItems(viewModel: RocketViewModel) {

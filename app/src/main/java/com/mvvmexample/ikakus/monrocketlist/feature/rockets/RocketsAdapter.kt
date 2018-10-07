@@ -10,40 +10,49 @@ import com.mvvmexample.ikakus.monrocketlist.databinding.RocketItemBinding
 
 
 class RocketsAdapter(
-    private var rockets: List<Rocket>) : BaseAdapter() {
+    private var rockets: List<Rocket>,
+    private var viewModel: RocketViewModel) : BaseAdapter() {
 
-    fun replaceData(list: List<Rocket>) {
-        setList(list)
+  fun replaceData(list: List<Rocket>) {
+    setList(list)
+  }
+
+  override fun getCount() = rockets.size
+
+  override fun getItem(position: Int) = rockets[position]
+
+  override fun getItemId(position: Int) = position.toLong()
+
+  override fun getView(position: Int, view: View?, viewGroup: ViewGroup): View {
+    val binding: RocketItemBinding
+    binding = if (view == null) {
+      // Inflate
+      val inflater = LayoutInflater.from(viewGroup.context)
+      // Create the binding
+      RocketItemBinding.inflate(inflater, viewGroup, false)
+    } else {
+      // Recycling view
+      DataBindingUtil.getBinding(view)!!
     }
 
-    override fun getCount() = rockets.size
+    val userActionsListener = object : RocketItemUserActionsListener {
+      override fun onRocketClicked(rocket: Rocket) {
+        viewModel.openRocketEvent.value = rocket.id
+      }
 
-    override fun getItem(position: Int) = rockets[position]
-
-    override fun getItemId(position: Int) = position.toLong()
-
-    override fun getView(position: Int, view: View?, viewGroup: ViewGroup): View {
-        val binding: RocketItemBinding
-        binding = if (view == null) {
-            // Inflate
-            val inflater = LayoutInflater.from(viewGroup.context)
-            // Create the binding
-            RocketItemBinding.inflate(inflater, viewGroup, false)
-        } else {
-            // Recycling view
-            DataBindingUtil.getBinding(view)!!
-        }
-
-        with(binding) {
-            rocket = rockets[position]
-            executePendingBindings()
-        }
-
-        return binding.root
     }
 
-    private fun setList(list: List<Rocket>) {
-        this.rockets = list
-        notifyDataSetChanged()
+    with(binding) {
+      rocket = rockets[position]
+      listener = userActionsListener
+      executePendingBindings()
     }
+
+    return binding.root
+  }
+
+  private fun setList(list: List<Rocket>) {
+    this.rockets = list
+    notifyDataSetChanged()
+  }
 }

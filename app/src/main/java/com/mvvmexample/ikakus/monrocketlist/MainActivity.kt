@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
 
     val fragmentManager = this.supportFragmentManager
     val fragmentTransaction = fragmentManager.beginTransaction()
-    fragmentTransaction.replace(R.id.container,RocketsFragment())
+    fragmentTransaction.replace(R.id.container, RocketsFragment.newInstance())
     fragmentTransaction.commit()
   }
 }

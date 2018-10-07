@@ -37,5 +37,5 @@ data class Rocket @JvmOverloads constructor(
     @ColumnInfo(name = "country") var country: String = "",
     @ColumnInfo(name = "engines_count") var enginesCount: Int = 0,
     @ColumnInfo(name = "active") var isActive: Boolean = false,
-    @PrimaryKey @ColumnInfo(name = "entryid") var id: String = ""
+    @PrimaryKey @ColumnInfo(name = "entryid") var id: Int = 0
 )
