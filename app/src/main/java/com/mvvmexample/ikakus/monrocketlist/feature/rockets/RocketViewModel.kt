@@ -3,11 +3,9 @@ package com.mvvmexample.ikakus.monrocketlist.feature.rockets
 import android.annotation.SuppressLint
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.databinding.BindingAdapter
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableList
-import android.widget.ListView
 import com.mvvmexample.ikakus.monrocketlist.SingleLiveEvent
 import com.mvvmexample.ikakus.monrocketlist.data.RocketData
 import com.mvvmexample.ikakus.monrocketlist.data.RocketRepository
@@ -39,12 +37,5 @@ class RocketViewModel(
             addAll(rockets)
           }
         }
-  }
-
-  @BindingAdapter("listItems")
-  fun setItems(listView: ListView, items: List<RocketData>) {
-    with(listView.adapter as RocketsAdapter) {
-      replaceData(items)
-    }
   }
 }

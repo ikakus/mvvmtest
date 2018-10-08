@@ -45,7 +45,7 @@ class RocketsFragment : Fragment() {
   private fun setupListAdapter() {
     val viewModel = viewDataBinding.viewmodel
     if (viewModel != null) {
-      rocketsAdapter = RocketsAdapter(ArrayList(0), viewModel)
+      rocketsAdapter = RocketsAdapter(viewModel)
       viewDataBinding.rocketsList.adapter = rocketsAdapter
       swipe_to_refresh.setOnRefreshListener {
         viewModel.loadRockets()
@@ -73,23 +73,23 @@ class RocketsFragment : Fragment() {
   private fun bindListItems(viewModel: RocketViewModel) {
     viewModel.items.addOnListChangedCallback(object : ObservableList.OnListChangedCallback<ObservableList<RocketData>>() {
       override fun onChanged(sender: ObservableList<RocketData>?) {
-        rocketsAdapter.replaceData(sender?.toList()!!)
+        rocketsAdapter.rockets =(sender?.toList()!!)
       }
 
       override fun onItemRangeRemoved(sender: ObservableList<RocketData>?, positionStart: Int, itemCount: Int) {
-        rocketsAdapter.replaceData(sender?.toList()!!)
+        rocketsAdapter.rockets =(sender?.toList()!!)
       }
 
       override fun onItemRangeMoved(sender: ObservableList<RocketData>?, fromPosition: Int, toPosition: Int, itemCount: Int) {
-        rocketsAdapter.replaceData(sender?.toList()!!)
+        rocketsAdapter.rockets =(sender?.toList()!!)
       }
 
       override fun onItemRangeInserted(sender: ObservableList<RocketData>?, positionStart: Int, itemCount: Int) {
-        rocketsAdapter.replaceData(sender?.toList()!!)
+        rocketsAdapter.rockets =(sender?.toList()!!)
       }
 
       override fun onItemRangeChanged(sender: ObservableList<RocketData>?, positionStart: Int, itemCount: Int) {
-        rocketsAdapter.replaceData(sender?.toList()!!)
+        rocketsAdapter.rockets =(sender?.toList()!!)
       }
 
     })
