@@ -3,7 +3,7 @@ package com.mvvmexample.ikakus.monrocketlist.feature.rockets
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.mvvmexample.ikakus.data.RocketData
+import com.mvvmexample.ikakus.data.data.RocketData
 import com.mvvmexample.ikakus.monrocketlist.databinding.RocketItemBinding
 
 

@@ -1,5 +1,6 @@
-package com.mvvmexample.ikakus.data
+package com.mvvmexample.ikakus.data.datasource.rocket
 
+import com.mvvmexample.ikakus.data.data.RocketData
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.http.GET

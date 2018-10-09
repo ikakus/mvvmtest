@@ -1,4 +1,4 @@
-package com.mvvmexample.ikakus.monrocketlist.schedulers
+package com.mvvmexample.ikakus.monrocketlist.common.schedulers
 
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers

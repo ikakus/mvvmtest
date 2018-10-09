@@ -1,4 +1,4 @@
-package com.mvvmexample.ikakus.data
+package com.mvvmexample.ikakus.data.data
 
 
 data class RocketData(

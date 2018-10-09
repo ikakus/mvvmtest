@@ -1,5 +1,7 @@
-package com.mvvmexample.ikakus.data
+package com.mvvmexample.ikakus.data.repository
 
+import com.mvvmexample.ikakus.data.data.RocketData
+import com.mvvmexample.ikakus.data.datasource.rocket.RocketsDataSource
 import io.reactivex.Single
 
 class RocketRepository(private val remoteDataSource: RocketsDataSource,

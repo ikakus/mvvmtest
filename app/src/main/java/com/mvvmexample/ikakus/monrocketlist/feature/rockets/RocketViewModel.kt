@@ -1,21 +1,23 @@
 package com.mvvmexample.ikakus.monrocketlist.feature.rockets
 
-import android.annotation.SuppressLint
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.databinding.ObservableBoolean
-import com.mvvmexample.ikakus.data.RocketData
+import com.jakewharton.rxrelay2.PublishRelay
+import com.mvvmexample.ikakus.data.data.RocketData
+import com.mvvmexample.ikakus.data.repository.RocketRepository
 import com.mvvmexample.ikakus.monrocketlist.common.SingleLiveEvent
-import com.mvvmexample.ikakus.data.RocketRepository
-import com.mvvmexample.ikakus.monrocketlist.schedulers.SchedulerProvider
-import io.reactivex.subjects.PublishSubject
+import com.mvvmexample.ikakus.monrocketlist.common.schedulers.SchedulerProvider
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.addTo
 
 class RocketViewModel(
     context: Application,
     private val rocketsRepository: RocketRepository
 ) : AndroidViewModel(context) {
 
-  val items: PublishSubject<List<RocketData>> = PublishSubject.create()
+  private val compositeDisposable = CompositeDisposable()
+  val items: PublishRelay<List<RocketData>> = PublishRelay.create()
   val loading = ObservableBoolean(false)
   internal val openRocketEvent = SingleLiveEvent<String>()
 
@@ -23,15 +25,20 @@ class RocketViewModel(
     loadRockets()
   }
 
-  @SuppressLint("CheckResult")
   internal fun loadRockets() {
     rocketsRepository.getRockets()
-        .toObservable()
         .observeOn(SchedulerProvider().ui())
         .doOnSubscribe { loading.set(true) }
-        .doFinally { loading.set(false) }
-        .subscribe{ rockets ->
-          items.onNext(rockets)
+        .doFinally {
+          loading.set(false)
         }
+        .subscribe { rockets ->
+          items.accept(rockets)
+        }.addTo(compositeDisposable)
+  }
+
+  override fun onCleared() {
+    super.onCleared()
+    compositeDisposable.clear()
   }
 }
