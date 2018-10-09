@@ -1,7 +1,6 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdk
@@ -10,22 +9,9 @@ android {
         minSdkVersion rootProject.ext.android.minSdk
         targetSdkVersion rootProject.ext.android.targetSdk
 
-        applicationId rootProject.ext.application.applicationId
         versionCode rootProject.ext.application.versionCode
         versionName rootProject.ext.application.versionName
 
-        multiDexEnabled true
-
-        testInstrumentationRunner rootProject.ext.testing.testInstrumentationRunner
-    }
-
-    dataBinding {
-        enabled = true
-    }
-
-    compileOptions {
-        sourceCompatibility rootProject.ext.compiler.java
-        targetCompatibility rootProject.ext.compiler.java
     }
 
     buildTypes {
@@ -34,11 +20,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-
         }
     }
+
 }
 
 dependencies {
-    implementation appDependencies
+    implementation dataDependencies['implementation']
 }

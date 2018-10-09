@@ -7,7 +7,7 @@
 
         <variable
             name="rocket"
-            type="com.mvvmexample.ikakus.monrocketlist.data.RocketData"/>
+            type="com.mvvmexample.ikakus.data.RocketData"/>
 
         <variable
             name="listener"

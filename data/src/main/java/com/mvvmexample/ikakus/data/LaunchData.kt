@@ -1,4 +1,4 @@
-package com.mvvmexample.ikakus.monrocketlist.data
+package com.mvvmexample.ikakus.data
 
 
 data class LaunchData(

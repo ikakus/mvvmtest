@@ -1,0 +1,104 @@
+ext {
+    compiler = [
+            java        : JavaVersion.VERSION_1_8,
+            kotlin      : '1.2.71',
+            gradlePlugin: '3.3.0-alpha11'
+    ]
+
+    android = [
+            minSdk    : 19,
+            targetSdk : 28,
+            compileSdk: 28
+    ]
+
+    application = [
+            applicationId: "com.mvvmexample.ikakus.monrocketlist",
+            versionCode  : 1,
+            versionName  : "0.1"
+    ]
+
+    testing = [
+            testInstrumentationRunner: "android.support.test.runner.AndroidJUnitRunner",
+
+            junit                    : 'junit:junit:4.12',
+            androidRunner            : 'com.android.support.test:runner:1.0.2',
+            espresso                 : 'com.android.support.test.espresso:espresso-core:3.0.2',
+    ]
+
+    versions = [
+            support         : '27.1.1',
+            constraintlayout: '1.1.2',
+            lifecycle       : '1.1.1',
+            rxJava          : '2.1.13',
+            rxAndroid       : '2.0.2',
+            rxBinding       : '2.1.1',
+            rxKotlin        : '2.2.0',
+            retrofit        : '2.4.0',
+            rxRelay         : '2.0.0',
+            picasso         : '2.71828',
+            multidex        : '1.0.3',
+            koin            : '0.9.2'
+    ]
+
+    dependencies = [
+            kotlinStdlib              : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${compiler.kotlin}",
+            appcompatV7               : "com.android.support:appcompat-v7:${versions.support}",
+            recyclerView              : "com.android.support:recyclerview-v7:${versions.support}",
+            supportDesign             : "com.android.support:design:${versions.support}",
+            supportV4                 : "com.android.support:support-v4:${versions.support}",
+            constraintlayout          : "com.android.support.constraint:constraint-layout:${versions.constraintlayout}",
+            lifecycleExtensions       : "android.arch.lifecycle:extensions:${versions.lifecycle}",
+            lifecycleCommonJava8      : "android.arch.lifecycle:common-java8:${versions.lifecycle}",
+            rxJava                    : "io.reactivex.rxjava2:rxjava:${versions.rxJava}",
+            rxAndroid                 : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}",
+            rxKotlin                  : "io.reactivex.rxjava2:rxkotlin:${versions.rxKotlin}",
+            rxbindingAppcompatV7Kotlin: "com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:${versions.rxBinding}",
+            rxbindingDesign           : "com.jakewharton.rxbinding2:rxbinding-design-kotlin:${versions.rxBinding}",
+            rxRelay                   : "com.jakewharton.rxrelay2:rxrelay:${versions.rxRelay}",
+            retrofit                  : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+            retrofitRxJava2           : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
+            retrofitConverter         : "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
+            picasso                   : "com.squareup.picasso:picasso:${versions.picasso}",
+            multidex                  : "com.android.support:multidex:${versions.multidex}",
+            koin                      : "org.koin:koin-android-architecture:${versions.koin}",
+    ]
+
+    domainDependencies = [
+            dependencies.kotlinStdlib,
+            dependencies.rxJava,
+    ]
+
+    dataDependencies = [
+            'implementation': [
+                    dependencies.kotlinStdlib,
+                    dependencies.retrofit,
+                    dependencies.rxJava
+            ],
+    ]
+
+    appDependencies = [
+            project(':data'),
+            dependencies.kotlinStdlib,
+            dependencies.appcompatV7,
+            dependencies.supportV4,
+            dependencies.retrofit,
+            dependencies.retrofitRxJava2,
+            dependencies.multidex,
+            dependencies.constraintlayout,
+            dependencies.rxJava,
+            dependencies.rxAndroid,
+            dependencies.rxbindingAppcompatV7Kotlin,
+            dependencies.rxbindingDesign,
+            dependencies.rxKotlin,
+            dependencies.rxRelay,
+            dependencies.picasso,
+            dependencies.lifecycleExtensions,
+            dependencies.lifecycleCommonJava8,
+            dependencies.constraintlayout,
+            dependencies.recyclerView,
+            dependencies.supportDesign,
+            dependencies.koin,
+            dependencies.retrofitConverter
+    ]
+
+}

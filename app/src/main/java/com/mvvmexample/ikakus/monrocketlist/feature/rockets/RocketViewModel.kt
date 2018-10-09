@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.databinding.ObservableBoolean
+import com.mvvmexample.ikakus.data.RocketData
 import com.mvvmexample.ikakus.monrocketlist.common.SingleLiveEvent
-import com.mvvmexample.ikakus.monrocketlist.data.RocketData
-import com.mvvmexample.ikakus.monrocketlist.data.RocketRepository
+import com.mvvmexample.ikakus.data.RocketRepository
 import com.mvvmexample.ikakus.monrocketlist.schedulers.SchedulerProvider
 import io.reactivex.subjects.PublishSubject
 

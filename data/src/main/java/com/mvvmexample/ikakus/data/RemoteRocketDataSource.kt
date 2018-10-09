@@ -1,11 +1,11 @@
-package com.mvvmexample.ikakus.monrocketlist.data
+package com.mvvmexample.ikakus.data
 
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-class RemoteRocketDataSource(retrofit: Retrofit) : RocketsDataSource{
+class RemoteRocketDataSource(retrofit: Retrofit) : RocketsDataSource {
   private var api = retrofit.
       create(RetrofitApi::class.java)
 
