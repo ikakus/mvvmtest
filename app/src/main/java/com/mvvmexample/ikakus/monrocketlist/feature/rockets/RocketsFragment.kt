@@ -2,23 +2,24 @@ package com.mvvmexample.ikakus.monrocketlist.feature.rockets
 
 import android.arch.lifecycle.Observer
 import android.content.Intent
-import android.databinding.ObservableList
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mvvmexample.ikakus.monrocketlist.data.RocketData
+import com.mvvmexample.ikakus.monrocketlist.common.LifecycleDisposable
 import com.mvvmexample.ikakus.monrocketlist.databinding.RocketListFragBinding
 import com.mvvmexample.ikakus.monrocketlist.feature.rocketdetails.RocketDetailsActivity
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.rocket_list_frag.*
 import org.koin.android.architecture.ext.viewModel
 
-class RocketsFragment : Fragment() {
+class RocketsFragment : Fragment(), LifecycleDisposable {
 
   private lateinit var viewDataBinding: RocketListFragBinding
   private lateinit var rocketsAdapter: RocketsAdapter
+  override val disposeBag = CompositeDisposable()
   private val vModel: RocketViewModel by viewModel()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +58,9 @@ class RocketsFragment : Fragment() {
         }
       })
 
-      bindListItems(viewModel)
+      viewModel.items.subscribe {
+        rocketsAdapter.rockets = it
+      }.addToBag()
     } else {
       Log.w(TAG, "ViewModel not initialized when attempting to set up adapter.")
     }
@@ -68,31 +71,6 @@ class RocketsFragment : Fragment() {
       putExtra(RocketDetailsActivity.EXTRA_ROCKET_ID, rocketId)
     }
     startActivity(intent)
-  }
-
-  private fun bindListItems(viewModel: RocketViewModel) {
-    viewModel.items.addOnListChangedCallback(object : ObservableList.OnListChangedCallback<ObservableList<RocketData>>() {
-      override fun onChanged(sender: ObservableList<RocketData>?) {
-        rocketsAdapter.rockets =(sender?.toList()!!)
-      }
-
-      override fun onItemRangeRemoved(sender: ObservableList<RocketData>?, positionStart: Int, itemCount: Int) {
-        rocketsAdapter.rockets =(sender?.toList()!!)
-      }
-
-      override fun onItemRangeMoved(sender: ObservableList<RocketData>?, fromPosition: Int, toPosition: Int, itemCount: Int) {
-        rocketsAdapter.rockets =(sender?.toList()!!)
-      }
-
-      override fun onItemRangeInserted(sender: ObservableList<RocketData>?, positionStart: Int, itemCount: Int) {
-        rocketsAdapter.rockets =(sender?.toList()!!)
-      }
-
-      override fun onItemRangeChanged(sender: ObservableList<RocketData>?, positionStart: Int, itemCount: Int) {
-        rocketsAdapter.rockets =(sender?.toList()!!)
-      }
-
-    })
   }
 
   companion object {
