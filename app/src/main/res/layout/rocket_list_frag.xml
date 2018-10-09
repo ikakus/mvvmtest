@@ -22,7 +22,7 @@
             android:id="@+id/swipe_to_refresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:refreshing="@{viewmodel.loading}">
+            app:refreshing="@{viewmodel.loading &amp; viewmodel.showRecyclerLoading}">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rockets_list"
@@ -36,7 +36,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{viewmodel.loading ? View.VISIBLE : View.GONE}">
+            android:background="@color/white"
+            android:visibility="@{viewmodel.loading &amp; viewmodel.showRecyclerLoading!=true ? View.VISIBLE : View.GONE}">
 
             <ProgressBar
                 android:id="@+id/progress_bar"

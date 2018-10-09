@@ -20,6 +20,7 @@ class RocketViewModel(
   val items: PublishRelay<List<RocketData>> = PublishRelay.create()
   val loading = ObservableBoolean(false)
   internal val openRocketEvent = SingleLiveEvent<String>()
+  var showRecyclerLoading = ObservableBoolean(false)
 
   fun start() {
     loadRockets()
@@ -28,9 +29,12 @@ class RocketViewModel(
   internal fun loadRockets() {
     rocketsRepository.getRockets()
         .observeOn(SchedulerProvider().ui())
-        .doOnSubscribe { loading.set(true) }
+        .doOnSubscribe {
+          loading.set(true)
+        }
         .doFinally {
           loading.set(false)
+          showRecyclerLoading.set(true)
         }
         .subscribe { rockets ->
           items.accept(rockets)
