@@ -1,6 +1,7 @@
 package com.mvvmexample.ikakus.monrocketlist
 
 import android.app.Application
+import com.mvvmexample.ikakus.monrocketlist.di.DatabaseModule
 import com.mvvmexample.ikakus.monrocketlist.di.NetworkModule
 import com.mvvmexample.ikakus.monrocketlist.feature.rocketdetails.di.RocketDetailsModule
 import com.mvvmexample.ikakus.monrocketlist.feature.rockets.di.RocketListModule
@@ -16,7 +17,8 @@ class App: Application() {
     startKoin(this, listOf(
         NetworkModule().instance,
         RocketListModule().instance,
-        RocketDetailsModule().instance
+        RocketDetailsModule().instance,
+        DatabaseModule(this).instance
     ))
 
   }

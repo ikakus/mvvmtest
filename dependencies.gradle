@@ -37,6 +37,7 @@ ext {
             rxRelay         : '2.0.0',
             picasso         : '2.71828',
             multidex        : '1.0.3',
+            room            : '1.1.1',
             koin            : '0.9.2'
     ]
 
@@ -61,18 +62,22 @@ ext {
             picasso                   : "com.squareup.picasso:picasso:${versions.picasso}",
             multidex                  : "com.android.support:multidex:${versions.multidex}",
             koin                      : "org.koin:koin-android-architecture:${versions.koin}",
-    ]
-
-    domainDependencies = [
-            dependencies.kotlinStdlib,
-            dependencies.rxJava,
+            roomCompiler              : "android.arch.persistence.room:compiler:${versions.room}",
+            roomRuntime               : "android.arch.persistence.room:runtime:${versions.room}",
+            roomRx                    : "android.arch.persistence.room:rxjava2:${versions.room}",
     ]
 
     dataDependencies = [
             'implementation': [
                     dependencies.kotlinStdlib,
                     dependencies.retrofit,
-                    dependencies.rxJava
+                    dependencies.rxJava,
+                    dependencies.roomRuntime,
+                    dependencies.roomRx,
+
+            ],
+            'kapt': [
+                    dependencies.roomCompiler,
             ],
     ]
 
@@ -98,7 +103,8 @@ ext {
             dependencies.recyclerView,
             dependencies.supportDesign,
             dependencies.koin,
-            dependencies.retrofitConverter
+            dependencies.retrofitConverter,
+            dependencies.roomRuntime
     ]
 
 }

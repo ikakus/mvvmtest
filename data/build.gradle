@@ -27,4 +27,5 @@ android {
 
 dependencies {
     implementation dataDependencies['implementation']
+    kapt  dataDependencies['kapt']
 }

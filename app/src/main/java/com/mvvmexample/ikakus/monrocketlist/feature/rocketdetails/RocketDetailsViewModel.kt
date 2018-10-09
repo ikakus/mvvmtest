@@ -5,7 +5,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
-import com.mvvmexample.ikakus.data.data.RocketData
+import com.mvvmexample.ikakus.data.entities.RocketEntity
 import com.mvvmexample.ikakus.data.repository.RocketRepository
 import com.mvvmexample.ikakus.monrocketlist.common.schedulers.SchedulerProvider
 
@@ -20,7 +20,7 @@ class RocketDetailsViewModel(
       loadRocketDetails(it)
     }
   }
-  val rocketData: ObservableField<RocketData> = ObservableField()
+  val rocketData: ObservableField<RocketEntity> = ObservableField()
   val loading = ObservableBoolean(false)
 
   @SuppressLint("CheckResult")

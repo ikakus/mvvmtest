@@ -12,7 +12,7 @@ class RocketDetailsModule {
     factory {
       RocketRepository(
           RemoteRocketDataSource(get()),
-          LocalRocketDataSource()
+          LocalRocketDataSource(get())
       )
     }
     viewModel { RocketDetailsViewModel(get(), get()) }

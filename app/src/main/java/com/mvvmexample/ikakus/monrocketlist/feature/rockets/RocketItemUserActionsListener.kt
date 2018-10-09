@@ -1,11 +1,11 @@
 package com.mvvmexample.ikakus.monrocketlist.feature.rockets
 
 
-import com.mvvmexample.ikakus.data.data.RocketData
+import com.mvvmexample.ikakus.data.entities.RocketEntity
 
 /**
  * Listener used with data binding to process user actions.
  */
 interface RocketItemUserActionsListener {
-    fun onRocketClicked(rocket: RocketData)
+    fun onRocketClicked(rocket: RocketEntity)
 }

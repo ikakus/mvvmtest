@@ -7,7 +7,7 @@
 
         <variable
             name="rocket"
-            type="com.mvvmexample.ikakus.data.data.RocketData"/>
+            type="com.mvvmexample.ikakus.data.entities.RocketEntity"/>
 
         <variable
             name="listener"
@@ -30,7 +30,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="@{rocket.rocket_name}"
+            android:text="@{rocket.name}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Falcon"/>
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@{String.valueOf(rocket.engines.number)}"
+            android:text="@{String.valueOf(rocket.engineCount)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

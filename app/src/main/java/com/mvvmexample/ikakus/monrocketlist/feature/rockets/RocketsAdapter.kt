@@ -3,14 +3,14 @@ package com.mvvmexample.ikakus.monrocketlist.feature.rockets
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.mvvmexample.ikakus.data.data.RocketData
+import com.mvvmexample.ikakus.data.entities.RocketEntity
 import com.mvvmexample.ikakus.monrocketlist.databinding.RocketItemBinding
 
 
 class RocketsAdapter(private var viewModel: RocketViewModel)
   : RecyclerView.Adapter<RocketsAdapter.RocketViewHolder>() {
 
-  var rockets: List<RocketData> = emptyList()
+  var rockets: List<RocketEntity> = emptyList()
   set(value) {
     field = value
     notifyDataSetChanged()
@@ -28,8 +28,8 @@ class RocketsAdapter(private var viewModel: RocketViewModel)
 
   override fun onBindViewHolder(holder: RocketViewHolder, position: Int) {
     val userActionsListener = object : RocketItemUserActionsListener {
-      override fun onRocketClicked(rocket: RocketData) {
-        viewModel.openRocketEvent.value = rocket.rocket_id
+      override fun onRocketClicked(rocket: RocketEntity) {
+        viewModel.openRocketEvent.value = rocket.id
       }
     }
 

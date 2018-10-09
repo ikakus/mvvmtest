@@ -12,9 +12,8 @@ class RocketListModule {
     factory {
       RocketRepository(
           RemoteRocketDataSource(get()),
-          LocalRocketDataSource()
+          LocalRocketDataSource(get())
       )
-//      SampleRepo()
     }
     viewModel { RocketViewModel(get(), get()) }
   }

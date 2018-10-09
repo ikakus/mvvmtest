@@ -4,7 +4,7 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.databinding.ObservableBoolean
 import com.jakewharton.rxrelay2.PublishRelay
-import com.mvvmexample.ikakus.data.data.RocketData
+import com.mvvmexample.ikakus.data.entities.RocketEntity
 import com.mvvmexample.ikakus.data.repository.RocketRepository
 import com.mvvmexample.ikakus.monrocketlist.common.SingleLiveEvent
 import com.mvvmexample.ikakus.monrocketlist.common.schedulers.SchedulerProvider
@@ -17,7 +17,7 @@ class RocketViewModel(
 ) : AndroidViewModel(context) {
 
   private val compositeDisposable = CompositeDisposable()
-  val items: PublishRelay<List<RocketData>> = PublishRelay.create()
+  val items: PublishRelay<List<RocketEntity>> = PublishRelay.create()
   val loading = ObservableBoolean(false)
   internal val openRocketEvent = SingleLiveEvent<String>()
   var showRecyclerLoading = ObservableBoolean(false)
@@ -28,17 +28,17 @@ class RocketViewModel(
 
   internal fun loadRockets() {
     rocketsRepository.getRockets()
+        .subscribeOn(SchedulerProvider().io())
         .observeOn(SchedulerProvider().ui())
-        .doOnSubscribe {
-          loading.set(true)
-        }
+        .doOnSubscribe { loading.set(true) }
         .doFinally {
           loading.set(false)
           showRecyclerLoading.set(true)
         }
         .subscribe { rockets ->
           items.accept(rockets)
-        }.addTo(compositeDisposable)
+        }
+        .addTo(compositeDisposable)
   }
 
   override fun onCleared() {
