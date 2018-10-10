@@ -1,7 +1,6 @@
 package com.mvvmexample.ikakus.monrocketlist.feature.rockets
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import com.jakewharton.rxrelay2.PublishRelay
 import com.mvvmexample.ikakus.data.entities.RocketEntity
@@ -12,9 +11,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 
 class RocketViewModel(
-    context: Application,
     private val rocketsRepository: RocketRepository
-) : AndroidViewModel(context) {
+) : ViewModel() {
 
   private val compositeDisposable = CompositeDisposable()
   val items: PublishRelay<List<RocketEntity>> = PublishRelay.create()
@@ -24,14 +22,11 @@ class RocketViewModel(
   var onlyActive = ObservableBoolean(false)
   internal val openRocketEvent = SingleLiveEvent<String>()
   private var rockets :List<RocketEntity> = emptyList()
-  var isOnlyActive: Boolean = false
-    set(value) {
-      field = value
-      onlyActive.set(value)
-      items.accept(
-          getRockets(value)
-      )
-    }
+
+  fun setActiveFilter(active :Boolean){
+    onlyActive.set(active)
+    items.accept(getRockets(active))
+  }
 
   fun start() {
     loadRockets()
@@ -55,7 +50,7 @@ class RocketViewModel(
         .subscribe { rockets ->
           this.rockets = rockets
           items.accept(
-              getRockets(isOnlyActive)
+              getRockets(onlyActive.get())
           )
         }
         .addTo(compositeDisposable)

@@ -16,6 +16,6 @@ class RocketDetailsModule {
           LocalRocketDataSource(get())
       )
     }
-    viewModel { RocketDetailsViewModel(get(), get()) }
+    viewModel { RocketDetailsViewModel(get()) }
   }
 }

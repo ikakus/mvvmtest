@@ -1,8 +1,7 @@
 package com.mvvmexample.ikakus.monrocketlist.feature.rocketdetails
 
 import android.annotation.SuppressLint
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import android.databinding.ObservableField
 import com.mvvmexample.ikakus.data.entities.RocketEntity
@@ -10,9 +9,8 @@ import com.mvvmexample.ikakus.data.repository.RocketRepository
 import com.mvvmexample.ikakus.monrocketlist.common.schedulers.SchedulerProvider
 
 class RocketDetailsViewModel(
-    context: Application,
     private val rocketsRepository: RocketRepository
-    ) : AndroidViewModel(context) {
+    ) : ViewModel() {
 
   var rocketId: String? = null
   set(value) {
