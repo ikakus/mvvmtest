@@ -43,6 +43,10 @@ class RocketsFragment : Fragment(), LifecycleDisposable {
     )
 
     button_retry.setOnClickListener { vModel.loadRockets() }
+
+    switch_active.setOnCheckedChangeListener { buttonView, isChecked ->
+      vModel.isOnlyActive = isChecked
+    }
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {

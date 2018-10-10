@@ -21,7 +21,17 @@ class RocketViewModel(
   val loading = ObservableBoolean(false)
   var enableRecyclerLoading = ObservableBoolean(false)
   var showSomethingWrong = ObservableBoolean(false)
+  var onlyActive = ObservableBoolean(false)
   internal val openRocketEvent = SingleLiveEvent<String>()
+  private var rockets :List<RocketEntity> = emptyList()
+  var isOnlyActive: Boolean = false
+    set(value) {
+      field = value
+      onlyActive.set(value)
+      items.accept(
+          getRockets(value)
+      )
+    }
 
   fun start() {
     loadRockets()
@@ -33,7 +43,8 @@ class RocketViewModel(
         .observeOn(SchedulerProvider().ui())
         .doOnSubscribe {
           loading.set(true)
-          showSomethingWrong.set(false)}
+          showSomethingWrong.set(false)
+        }
         .doOnError {
           showSomethingWrong.set(true)
         }
@@ -42,9 +53,20 @@ class RocketViewModel(
           enableRecyclerLoading.set(true)
         }
         .subscribe { rockets ->
-          items.accept(rockets)
+          this.rockets = rockets
+          items.accept(
+              getRockets(isOnlyActive)
+          )
         }
         .addTo(compositeDisposable)
+  }
+
+  private fun getRockets(active: Boolean): List<RocketEntity>{
+    return if(active){
+      rockets.filter { it.active }
+    }else{
+      rockets
+    }
   }
 
   override fun onCleared() {

@@ -4,6 +4,7 @@
     >
 
     <data>
+
         <import type="android.view.View"/>
 
         <variable
@@ -12,9 +13,9 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
-        android:background="@color/background_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/background_main">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -23,12 +24,23 @@
             android:theme="@style/AppTheme.AppBarOverlay"
             app:layout_constraintTop_toTopOf="parent"
             >
+
             <ImageView
-                android:src="@drawable/top_logo"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:src="@drawable/top_logo"/>
         </android.support.v7.widget.Toolbar>
 
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_active"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:checked="@{viewmodel.onlyActive}"
+            android:text="@string/active_only"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"/>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_to_refresh"
@@ -38,7 +50,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/switch_active"
             app:refreshing="@{viewmodel.loading &amp; viewmodel.enableRecyclerLoading}">
 
             <android.support.v7.widget.RecyclerView
@@ -58,7 +70,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/switch_active"
             >
 
             <ProgressBar
@@ -76,27 +88,27 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintTop_toBottomOf="@id/switch_active"
             >
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_gravity="center"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:orientation="vertical">
 
-            <TextView
-                android:textColor="@color/white"
-                android:text="@string/something_went_wrong"
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/something_went_wrong"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"/>
 
                 <Button
                     android:id="@+id/button_retry"
-                    android:text="@string/retry"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="match_parent"
+                    android:text="@string/retry"/>
 
             </LinearLayout>
 
