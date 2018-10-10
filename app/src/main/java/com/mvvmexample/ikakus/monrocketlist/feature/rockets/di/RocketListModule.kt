@@ -11,6 +11,7 @@ class RocketListModule {
   val instance = applicationContext {
     factory {
       RocketRepository(
+          get(),
           RemoteRocketDataSource(get()),
           LocalRocketDataSource(get())
       )

@@ -2,6 +2,8 @@ package com.mvvmexample.ikakus.monrocketlist.di
 
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.mvvmexample.ikakus.data.NetworkConnectionStateProvider
+import com.mvvmexample.ikakus.monrocketlist.common.network.NetworkHelper
 import io.reactivex.schedulers.Schedulers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
@@ -14,38 +16,42 @@ import java.util.concurrent.TimeUnit
 
 
 class NetworkModule {
-    private val BASE_URL = "https://api.spacexdata.com/v3/"
+  private val BASE_URL = "https://api.spacexdata.com/v3/"
 
-    val instance = applicationContext {
-        bean {
-            val cacheSize = 10 * 1024 * 1024
-            Cache(this.androidApplication().cacheDir, cacheSize.toLong())
-        }
-
-        bean {
-            val gsonBuilder = GsonBuilder()
-            gsonBuilder.setDateFormat("yyyy-MM-dd")
-            gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            gsonBuilder.setLenient()
-            gsonBuilder.create()
-        }
-
-        bean {
-            val client = OkHttpClient.Builder()
-
-            client.cache(get())
-            client.readTimeout(5, TimeUnit.MINUTES)
-            client.build()
-        }
-
-        bean {
-            val rxAdapter = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
-            Retrofit.Builder()
-                    .addConverterFactory(GsonConverterFactory.create(get()))
-                    .addCallAdapterFactory(rxAdapter)
-                    .baseUrl(BASE_URL)
-                    .client(get())
-                    .build()
-        }
+  val instance = applicationContext {
+    bean {
+      val cacheSize = 10 * 1024 * 1024
+      Cache(this.androidApplication().cacheDir, cacheSize.toLong())
     }
+
+    bean {
+      val gsonBuilder = GsonBuilder()
+      gsonBuilder.setDateFormat("yyyy-MM-dd")
+      gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+      gsonBuilder.setLenient()
+      gsonBuilder.create()
+    }
+
+    bean {
+      val client = OkHttpClient.Builder()
+
+      client.cache(get())
+      client.readTimeout(5, TimeUnit.MINUTES)
+      client.build()
+    }
+
+    bean {
+      val rxAdapter = RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io())
+      Retrofit.Builder()
+          .addConverterFactory(GsonConverterFactory.create(get()))
+          .addCallAdapterFactory(rxAdapter)
+          .baseUrl(BASE_URL)
+          .client(get())
+          .build()
+    }
+
+    bean {
+      NetworkHelper(this.androidApplication()) as NetworkConnectionStateProvider
+    }
+  }
 }
