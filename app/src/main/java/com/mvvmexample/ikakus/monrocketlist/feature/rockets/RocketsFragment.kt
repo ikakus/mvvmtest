@@ -13,14 +13,14 @@ import com.mvvmexample.ikakus.monrocketlist.databinding.RocketListFragBinding
 import com.mvvmexample.ikakus.monrocketlist.feature.rocketdetails.RocketDetailsActivity
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.rocket_list_frag.*
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.ext.android.inject
 
 class RocketsFragment : Fragment(), LifecycleDisposable {
 
   private lateinit var viewDataBinding: RocketListFragBinding
   private lateinit var rocketsAdapter: RocketsAdapter
   override val disposeBag = CompositeDisposable()
-  private val vModel: RocketViewModel by viewModel()
+  private val vModel: RocketViewModel by inject()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {
