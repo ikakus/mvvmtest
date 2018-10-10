@@ -41,4 +41,6 @@ android {
 
 dependencies {
     implementation appDependencies
+    testImplementation testing['junit']
+    testImplementation testing['mockito']
 }

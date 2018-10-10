@@ -7,7 +7,7 @@ import com.mvvmexample.ikakus.data.entities.RocketEntity
 import com.mvvmexample.ikakus.monrocketlist.databinding.RocketItemBinding
 
 
-class RocketsAdapter(private var viewModel: RocketViewModel)
+class RocketsAdapter(private var viewModel: RocketsViewModel)
   : RecyclerView.Adapter<RocketsAdapter.RocketViewHolder>() {
 
   var rockets: List<RocketEntity> = emptyList()

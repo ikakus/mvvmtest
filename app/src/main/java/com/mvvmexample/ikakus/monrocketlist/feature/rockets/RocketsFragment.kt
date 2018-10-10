@@ -20,7 +20,7 @@ class RocketsFragment : Fragment(), LifecycleDisposable {
   private lateinit var viewDataBinding: RocketListFragBinding
   private lateinit var rocketsAdapter: RocketsAdapter
   override val disposeBag = CompositeDisposable()
-  private val vModel: RocketViewModel by inject()
+  private val vModel: RocketsViewModel by inject()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                             savedInstanceState: Bundle?): View? {

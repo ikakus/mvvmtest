@@ -3,15 +3,16 @@ package com.mvvmexample.ikakus.monrocketlist.feature.rockets
 import android.arch.lifecycle.ViewModel
 import android.databinding.ObservableBoolean
 import com.jakewharton.rxrelay2.PublishRelay
+import com.mvvmexample.ikakus.data.datasource.rocket.RocketsDataSource
 import com.mvvmexample.ikakus.data.entities.RocketEntity
-import com.mvvmexample.ikakus.data.repository.RocketRepository
 import com.mvvmexample.ikakus.monrocketlist.common.SingleLiveEvent
-import com.mvvmexample.ikakus.monrocketlist.common.schedulers.SchedulerProvider
+import com.mvvmexample.ikakus.monrocketlist.common.schedulers.BaseSchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 
-class RocketViewModel(
-    private val rocketsRepository: RocketRepository
+class RocketsViewModel(
+    private val schedulerProvider: BaseSchedulerProvider,
+    private val rocketsRepository: RocketsDataSource
 ) : ViewModel() {
 
   private val compositeDisposable = CompositeDisposable()
@@ -34,8 +35,8 @@ class RocketViewModel(
 
   internal fun loadRockets() {
     rocketsRepository.getRockets()
-        .subscribeOn(SchedulerProvider().io())
-        .observeOn(SchedulerProvider().ui())
+        .subscribeOn(schedulerProvider.io())
+        .observeOn(schedulerProvider.ui())
         .doOnSubscribe {
           loading.set(true)
           showSomethingWrong.set(false)
