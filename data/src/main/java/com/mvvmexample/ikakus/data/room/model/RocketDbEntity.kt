@@ -11,6 +11,7 @@ data class RocketDbEntity(
     @ColumnInfo(name = "country") val country: String,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "active") val active: Boolean,
+    @ColumnInfo(name = "description") val description: String,
     @PrimaryKey
     @ColumnInfo(name = "id") val id: String
 ) {
@@ -20,6 +21,7 @@ data class RocketDbEntity(
           country = rocketData.country,
           name = rocketData.name,
           id = rocketData.id,
+          description = rocketData.description,
           active = rocketData.active
       )
 }

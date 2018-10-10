@@ -8,6 +8,7 @@ data class RocketEntity(
     val country: String,
     val name: String,
     val id: String,
+    val description: String,
     val active: Boolean
 ) {
   constructor(rocketDbEntity: RocketDbEntity) :
@@ -16,6 +17,7 @@ data class RocketEntity(
           country = rocketDbEntity.country,
           name = rocketDbEntity.name,
           id = rocketDbEntity.id,
+          description = rocketDbEntity.description,
           active = rocketDbEntity.active
       )
 
@@ -25,6 +27,7 @@ data class RocketEntity(
           country = rocketData.country,
           name = rocketData.rocket_name,
           id = rocketData.rocket_id,
+          description = rocketData.description,
           active = rocketData.active
       )
 }
