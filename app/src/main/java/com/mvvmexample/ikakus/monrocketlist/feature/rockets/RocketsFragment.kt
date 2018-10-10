@@ -4,10 +4,10 @@ import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.mvvmexample.ikakus.monrocketlist.R
 import com.mvvmexample.ikakus.monrocketlist.common.LifecycleDisposable
 import com.mvvmexample.ikakus.monrocketlist.databinding.RocketListFragBinding
 import com.mvvmexample.ikakus.monrocketlist.feature.rocketdetails.RocketDetailsActivity
@@ -35,7 +35,14 @@ class RocketsFragment : Fragment(), LifecycleDisposable {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     viewDataBinding.viewmodel?.start()
+    swipe_to_refresh.setColorSchemeResources(
+        R.color.colorAccent,
+        R.color.selection,
+        R.color.colorAccent,
+        R.color.selection
+    )
 
+    button_retry.setOnClickListener { vModel.loadRockets() }
   }
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -44,26 +51,21 @@ class RocketsFragment : Fragment(), LifecycleDisposable {
   }
 
   private fun setupListAdapter() {
-    val viewModel = viewDataBinding.viewmodel
-    if (viewModel != null) {
-      rocketsAdapter = RocketsAdapter(viewModel)
-      viewDataBinding.rocketsList.adapter = rocketsAdapter
-      swipe_to_refresh.setOnRefreshListener {
-        viewModel.loadRockets()
-      }
-
-      viewModel.openRocketEvent.observe(this, Observer { rocketId ->
-        if (rocketId != null) {
-          openRocketDetails(rocketId)
-        }
-      })
-
-      viewModel.items.subscribe {
-        rocketsAdapter.rockets = it
-      }.addToBag()
-    } else {
-      Log.w(TAG, "ViewModel not initialized when attempting to set up adapter.")
+    rocketsAdapter = RocketsAdapter(vModel)
+    viewDataBinding.rocketsList.adapter = rocketsAdapter
+    swipe_to_refresh.setOnRefreshListener {
+      vModel.loadRockets()
     }
+
+    vModel.openRocketEvent.observe(this, Observer { rocketId ->
+      if (rocketId != null) {
+        openRocketDetails(rocketId)
+      }
+    })
+
+    vModel.items.subscribe {
+      rocketsAdapter.rockets = it
+    }.addToBag()
   }
 
   private fun openRocketDetails(rocketId: String) {

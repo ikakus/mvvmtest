@@ -19,8 +19,9 @@ class RocketViewModel(
   private val compositeDisposable = CompositeDisposable()
   val items: PublishRelay<List<RocketEntity>> = PublishRelay.create()
   val loading = ObservableBoolean(false)
+  var enableRecyclerLoading = ObservableBoolean(false)
+  var showSomethingWrong = ObservableBoolean(false)
   internal val openRocketEvent = SingleLiveEvent<String>()
-  var showRecyclerLoading = ObservableBoolean(false)
 
   fun start() {
     loadRockets()
@@ -30,10 +31,15 @@ class RocketViewModel(
     rocketsRepository.getRockets()
         .subscribeOn(SchedulerProvider().io())
         .observeOn(SchedulerProvider().ui())
-        .doOnSubscribe { loading.set(true) }
+        .doOnSubscribe {
+          loading.set(true)
+          showSomethingWrong.set(false)}
+        .doOnError {
+          showSomethingWrong.set(true)
+        }
         .doFinally {
           loading.set(false)
-          showRecyclerLoading.set(true)
+          enableRecyclerLoading.set(true)
         }
         .subscribe { rockets ->
           items.accept(rockets)

@@ -16,9 +16,11 @@
     </data>
 
     <android.support.constraint.ConstraintLayout
+        android:layout_margin="8dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/item_selector"
-        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:padding="8dp"
         android:onClick="@{() -> listener.onRocketClicked(rocket)}"
         >
 
@@ -42,10 +44,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="@{rocket.country}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rocket_name"
-            tools:text="Falcon"/>
+            tools:text="USA"/>
 
         <TextView
             android:id="@+id/engines_count"
@@ -53,12 +58,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@{String.valueOf(rocket.engineCount)}"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@{@string/engines_count(String.valueOf(rocket.engineCount))}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="8dp"
-            tools:text="Falcon"/>
+            app:layout_constraintVertical_bias="1.0"
+            android:textColor="@color/blue"
+            tools:text="6"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

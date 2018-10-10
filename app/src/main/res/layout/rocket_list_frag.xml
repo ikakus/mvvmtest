@@ -4,37 +4,42 @@
     >
 
     <data>
-
         <import type="android.view.View"/>
 
         <variable
             name="viewmodel"
             type="com.mvvmexample.ikakus.monrocketlist.feature.rockets.RocketViewModel"/>
-
     </data>
 
     <android.support.constraint.ConstraintLayout
+        android:background="@color/background_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay"
             app:layout_constraintTop_toTopOf="parent"
-            app:title="@string/main_title"/>
+            >
+            <ImageView
+                android:src="@drawable/top_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </android.support.v7.widget.Toolbar>
+
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_to_refresh"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:visibility="@{viewmodel.showSomethingWrong ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:refreshing="@{viewmodel.loading &amp; viewmodel.showRecyclerLoading}">
+            app:refreshing="@{viewmodel.loading &amp; viewmodel.enableRecyclerLoading}">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rockets_list"
@@ -48,8 +53,8 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/white"
-            android:visibility="@{viewmodel.loading &amp; viewmodel.showRecyclerLoading!=true ? View.VISIBLE : View.GONE}"
+            android:background="@color/background_main"
+            android:visibility="@{viewmodel.loading &amp; viewmodel.enableRecyclerLoading!=true ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,6 +66,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/background_main"
+            android:visibility="@{viewmodel.showSomethingWrong ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                android:textColor="@color/white"
+                android:text="@string/something_went_wrong"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+                <Button
+                    android:id="@+id/button_retry"
+                    android:text="@string/retry"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+
         </FrameLayout>
 
     </android.support.constraint.ConstraintLayout>

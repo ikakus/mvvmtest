@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">MonRocketList</string>
     <string name="main_title">Rockets list</string>
+    <string name="something_went_wrong">Something went wrong, sorry</string>
+    <string name="retry">Retry</string>
+    <string name="engines_count">engines: %s</string>
+
 </resources>
